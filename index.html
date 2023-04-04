@@ -3,17 +3,17 @@
 <script src="https://tonejs.github.io/build/Tone.js"></script>
 <script>
   /* global Tone */
+  let i = 0
+  const notes = ['C4', 'E4', 'G4']
 
   function playTone () {
-    // create a tone.js "synth"
     const synth = new Tone.Synth().toDestination()
     synth.oscillator.type = 'triangle'
-    // trigger the sound for the length of an 8th note
-    synth.triggerAttackRelease('E4', '8n')  
+    synth.triggerAttackRelease(notes[i], '8n')  
+    i++
   }
   
   const button = document.querySelector('button')
   button.addEventListener('click', playTone)
-
 
 </script>
