@@ -1,0 +1,19 @@
+<button>click for tone</button>
+
+<script src="https://tonejs.github.io/build/Tone.js"></script>
+<script>
+  /* global Tone */
+
+  function playTone () {
+    // create a tone.js "synth"
+    const synth = new Tone.Synth().toDestination()
+    synth.oscillator.type = 'triangle'
+    // trigger the sound for the length of an 8th note
+    synth.triggerAttackRelease('E4', '8n')  
+  }
+  
+  const button = document.querySelector('button')
+  button.addEventListener('click', playTone)
+
+
+</script>
