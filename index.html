@@ -4,16 +4,21 @@
 <script>
   /* global Tone */
   let i = 0
-  const notes = ['C4', 'E4', 'G4', 'C5']
+  const notes = ['C4', 'E4', 'G4', 'C5', 'C4', 'G4']
 
-  function playTone () {
+  function play (time) {
     const synth = new Tone.Synth().toDestination()
     synth.oscillator.type = 'triangle'
     synth.triggerAttackRelease(notes[i % notes.length], '10n')  
     i++
   }
   
+  function start () {
+    Tone.Transport.scheduleRepeat(play, '16n')
+    //Tone.Transport.start()
+  }
+  
   const button = document.querySelector('button')
-  button.addEventListener('click', playTone)
-
+  button.addEventListener('click', start)
+  
 </script>
