@@ -1,4 +1,4 @@
-<button>click for tone</button>
+<button>start</button>
 
 <script src="https://tonejs.github.io/build/Tone.js"></script>
 <script>
@@ -9,13 +9,21 @@
   function play (time) {
     const synth = new Tone.Synth().toDestination()
     synth.oscillator.type = 'triangle'
-    synth.triggerAttackRelease(notes[i % notes.length], '10n')  
+    synth.triggerAttackRelease(notes[i % notes.length], '8n')  
     i++
   }
   
+  function beat (time) {
+    const synth = new Tone.Synth().toDestination()
+    synth.oscillator.type = 'square'
+    synth.triggerAttackRelease('A4', '16n')
+  }
+  
   function start () {
-    Tone.Transport.scheduleRepeat(play, '16n')
-    //Tone.Transport.start()
+    Tone.Transport.scheduleRepeat(play, '8n')
+    Tone.Transport.scheduleRepeat(beat, '16n')
+    Tone.Transport.bpm.value = 60 //speed 
+    Tone.Transport.start()
   }
   
   const button = document.querySelector('button')
