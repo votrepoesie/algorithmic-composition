@@ -4,12 +4,12 @@
 <script>
   /* global Tone */
   let i = 0
-  const notes = ['C4', 'E4', 'G4']
+  const notes = ['C4', 'E4', 'G4', 'C5']
 
   function playTone () {
     const synth = new Tone.Synth().toDestination()
     synth.oscillator.type = 'triangle'
-    synth.triggerAttackRelease(notes[i], '8n')  
+    synth.triggerAttackRelease(notes[i % notes.length], '10n')  
     i++
   }
   
