@@ -1,5 +1,5 @@
-<button>start</button>
-<button>stop</button>
+<button id="button1">start</button>
+<button id="button2">stop</button>
 <br><br>
 <input type="range" id="bpm" min="60" max="150" step="5" value="0">
 
@@ -11,10 +11,12 @@
     width: 100px;
     border-radius: 20px;
     font-size: 20px;
+    margin: 10px;
   }
   
   input {
-    width: 200px;
+    width: 220px;
+    margin: 10px;
   }
 </style>
 
@@ -23,19 +25,40 @@
 <script>
   /* global Tone */
   let i = 0
-  const notes = ['C4', 'E4', 'G4', 'A4', 'F4', 'C4', 'G4', 'E4']
+  //const notes = ['C4', 'E4', 'G4', 'A4', 'F4', 'C4', 'G4', 'E4']
+  
+  //Fibonacci sequence
+  //each chord is derived from the sum of the two previous chords
+  const notes = ['C4', 'E4', 'G4', 'A3', 'C4', 'E4', 'F4', 'A4', 'C5',
+                'D4', 'F4', 'A4']
+  
+  const drums = ['C2', 'C2', null]
 
   function play () {
     const synth = new Tone.AMSynth().toDestination()
     //synth.oscillator.type = 'fatsawtooth'
-    synth.triggerAttackRelease(notes[i % notes.length], '8n')  
+    synth.triggerAttackRelease(notes[i % notes.length], '8n')   
+    i++
+  }
+  
+  function drum () {
+    const drum = new Tone.Synth().toDestination()   
+    drum.triggerAttackRelease(drums[i % notes.length], '8n')
     i++
   }
   
   function start () {
+    Tone.Transport.cancel()
     Tone.Transport.scheduleRepeat(play, '8n')
+    Tone.Transport.scheduleRepeat(drum, '8n')
     Tone.Transport.bpm.value = 60 //speed 
     Tone.Transport.start()
+    console.log("music!")
+  }
+  
+  function stop () {
+    Tone.Transport.stop()
+    console.log("no music!")
   }
 
   const toggle = document.querySelector('#bpm')
@@ -43,7 +66,10 @@
     Tone.Transport.bpm.value = toggle.value // change the gn node's value to match the slider
   })
     
-  const button = document.querySelector('button')
-  button.addEventListener('click', start)
+  const button1 = document.querySelector('#button1')
+  const button2 = document.querySelector('#button2')
+  
+  button1.addEventListener('click', start)
+  button2.addEventListener('click', stop)
   
 </script>
