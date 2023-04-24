@@ -1,39 +1,44 @@
-<button>start</button><br><br>
-<input type="range" id="volume" min="60" max="120" step="1" value="0">
+<button>start</button>
+<button>stop</button>
+<br><br>
+<input type="range" id="bpm" min="60" max="150" step="5" value="0">
 
+<style>
+  button {
+    background: plum;
+    border: none;
+    height: 50px;
+    width: 100px;
+    border-radius: 20px;
+    font-size: 20px;
+  }
+  
+  input {
+    width: 200px;
+  }
+</style>
 
 
 <script src="https://tonejs.github.io/build/Tone.js"></script>
 <script>
   /* global Tone */
   let i = 0
-  const notes = ['E4', 'D4', 'C4', 'D4', 'E4', 'E4', 'E4', 'C2', 
-                'D4', 'D4', 'D4', 'C2', 
-                'E4', 'E4', 'E4', 'C2']
+  const notes = ['C4', 'E4', 'G4', 'A4', 'F4', 'C4', 'G4', 'E4']
 
-  function play (time) {
-    const synth = new Tone.Synth().toDestination()
-    synth.oscillator.type = 'triangle'
+  function play () {
+    const synth = new Tone.AMSynth().toDestination()
+    //synth.oscillator.type = 'fatsawtooth'
     synth.triggerAttackRelease(notes[i % notes.length], '8n')  
     i++
   }
   
-  function beat (time) {
-    const synth = new Tone.Synth().toDestination()
-    synth.oscillator.type = 'sine'
-    synth.volume.value = -10
-    synth.triggerAttackRelease('C3', '16n')
-  }
-  
   function start () {
     Tone.Transport.scheduleRepeat(play, '8n')
-    Tone.Transport.scheduleRepeat(beat, '16n')
     Tone.Transport.bpm.value = 60 //speed 
     Tone.Transport.start()
   }
-  
 
-  const toggle = document.querySelector('#volume')
+  const toggle = document.querySelector('#bpm')
   toggle.addEventListener('input', () => { // when the vol slider changes
     Tone.Transport.bpm.value = toggle.value // change the gn node's value to match the slider
   })
