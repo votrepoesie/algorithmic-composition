@@ -1,12 +1,36 @@
-<button id="button1">start</button>
-<button id="button2">stop</button>
-<br><br>
-<input type="range" id="bpm" min="60" max="150" step="5" value="0">
+<div class="container">
+  <button id="button1">start</button>
+	<button id="button2">stop</button>
+	<br> 
+	<input type="range" id="bpm" min="60" max="150" step="5" value="0">
+	<br> 
+	<input type="range" id="" min="60" max="150" step="5" value="0">
+	<br>
+	<input type="range" id="" min="60" max="150" step="5" value="0">
+  <div id="music-tunnel"></div>
+</div>
 
 <style>
+  
+  p {
+    text-align: center;
+  }
+  
+  .container {
+    background: #FFCDCB;
+    border: 1px #806867 solid;
+    width: 245px;
+    height: 300px;
+    position: absolute;
+    left: 50px;
+    top: 50px;
+    border-radius: 30px;
+  }
+  
   button {
-    background: plum;
-    border: none;
+    background: #FFE7CB;
+    color: #806867;
+    border: 1px #806867 solid;
     height: 50px;
     width: 100px;
     border-radius: 20px;
@@ -14,10 +38,25 @@
     margin: 10px;
   }
   
+	button:hover {
+  	box-shadow: 0px 0px 10px 2px #EAAEAB;
+	}
+  
   input {
     width: 220px;
     margin: 10px;
   }
+  
+  #music-tunnel {
+    background: black;
+    width: 220px;
+    height: 100px;
+    position: relative;
+    margin: 10px;
+    left: 2px;
+    border-radius: 20px;
+  }
+  
 </style>
 
 
