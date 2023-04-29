@@ -63,7 +63,6 @@
 <script src="https://tonejs.github.io/build/Tone.js"></script>
 <script>
   /* global Tone */
-  let i = 0
   //const notes = ['C4', 'E4', 'G4', 'A4', 'F4', 'C4', 'G4', 'E4']
   
   //Fibonacci sequence
@@ -75,20 +74,20 @@
   
   const chord1 = [400, 200, 300]
   const chord2 = [150, 300, 250]
-  const numChords = 8
+  const numChords = 10
   const chords = [chord1, chord2]
   
   for (let i = 2; i < numChords; i++ ) {
     const prev1 = chords[i - 1]
     const prev2 = chords[i - 2]
-    const next = prev1.map((note, index) => (note + prev2[index])/1.8)
+    const next = prev1.map((note, index) => (note + prev2[index])/1.9)
     chords.push(next)
   }
   
   // const notes = ['C4', 'E4', 'G4', 'A3', 'C4', 'E4', 'F4', 'A4', 'C5',
   //              'D4', 'F4', 'A4']
   
-  const drums = ['C2', 'C2', null]
+  const drums = ['C1']
   
   //mouse position
   
@@ -99,12 +98,13 @@
   //playing music
   
   let n = 0
+  let i = 0
   
   function play () {
     i++ 
-    if (i === 7 || i === 13 || i === 19 || i === 25) n++
+    if (i === 7 || i === 13 || i === 19 || i === 25 || i === 31 || i === 37 || i === 43 || i === 49 || i === 55 || i === 61 || i === 67 || i === 73 || i === 79 || i === 85 || i === 91 || i === 97 || i === 103) n++
     const synth = new Tone.AMSynth().toDestination()
-    //synth.oscillator.type = 'fatsawtooth'
+    synth.oscillator.type = 'fatsawtooth'
     synth.triggerAttackRelease(chords[n][i % chords[1].length], '8n') 
     //bug: chords[] need to be 000111222333, aka +1 every 3 times & stop at 8
     console.log(i, n)
@@ -117,7 +117,7 @@
   console.log(chords)
   
   function drum () {
-    const drum = new Tone.Synth().toDestination()   
+    const drum = new Tone.MembraneSynth().toDestination()   
     drum.triggerAttackRelease(drums[i % drums.length], '8n')
     i++
   }
@@ -137,8 +137,8 @@
   }
 
   const toggle = document.querySelector('#bpm')
-  toggle.addEventListener('input', () => { // when the vol slider changes
-    Tone.Transport.bpm.value = toggle.value // change the gn node's value to match the slider
+  toggle.addEventListener('input', () => { 
+    Tone.Transport.bpm.value = toggle.value 
   })
     
   const button1 = document.querySelector('#button1')
