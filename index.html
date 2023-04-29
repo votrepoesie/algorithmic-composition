@@ -69,21 +69,56 @@
   //Fibonacci sequence
   //each chord is derived from the sum of the two previous chords
   //still need to write the algorithm
-  const notes = ['C4', 'E4', 'G4', 'A3', 'C4', 'E4', 'F4', 'A4', 'C5',
-                'D4', 'F4', 'A4']
+  
+  // const chord1 = ['C4', 'E4', 'G4']
+  // const chord2 = ['A3', 'C4', 'E4']
+  
+  const chord1 = [400, 200, 300]
+  const chord2 = [150, 300, 250]
+  const numChords = 8
+  const chords = [chord1, chord2]
+  
+  for (let i = 2; i < numChords; i++ ) {
+    const prev1 = chords[i - 1]
+    const prev2 = chords[i - 2]
+    const next = prev1.map((note, index) => (note + prev2[index])/1.8)
+    chords.push(next)
+  }
+  
+  // const notes = ['C4', 'E4', 'G4', 'A3', 'C4', 'E4', 'F4', 'A4', 'C5',
+  //              'D4', 'F4', 'A4']
   
   const drums = ['C2', 'C2', null]
-
+  
+  //mouse position
+  
+	// document.addEventListener("mousemove", (event) => {
+	// console.log(`Mouse position: x=${event.clientX}, y=${event.clientY}`);
+	// });
+  
+  //playing music
+  
+  let n = 0
+  
   function play () {
+    i++ 
+    if (i === 7 || i === 13 || i === 19 || i === 25) n++
     const synth = new Tone.AMSynth().toDestination()
     //synth.oscillator.type = 'fatsawtooth'
-    synth.triggerAttackRelease(notes[i % notes.length], '8n')   
-    i++
+    synth.triggerAttackRelease(chords[n][i % chords[1].length], '8n') 
+    //bug: chords[] need to be 000111222333, aka +1 every 3 times & stop at 8
+    console.log(i, n)
   }
+  
+//   function switch () {
+      
+//   }
+  
+  console.log(chords)
   
   function drum () {
     const drum = new Tone.Synth().toDestination()   
-    drum.triggerAttackRelease(drums[i % notes.length], '8n')
+    drum.triggerAttackRelease(drums[i % drums.length], '8n')
     i++
   }
   
