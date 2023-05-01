@@ -1,49 +1,15 @@
 <div class="container">
-  <p>
-    chord one
-  </p>
+  <p>chord one</p>
   <input>
-  <p>
-    chord two
-  </p>
+  <p>chord two</p>
   <input>
   <button id="button1">start</button>
 	<button id="button2">stop</button>
 	<br> 
 	<input type="range" id="bpm" min="60" max="150" step="5" value="0">
-<!-- 	<br> 
-	<input type="range" id="divisor" min="60" max="150" step="5" value="0">
-	<br>
-	<input type="range" id="" min="60" max="150" step="5" value="0"> -->
 </div>
 
-<!-- <div class="music-note one">🎵</div>
-<div class="music-note two">🎵</div>
-<div class="music-note three">🎵</div> -->
-
 <style>
-  
-/*   .music-note {
-    background: plum;
-    width: 100px;
-    height: 90px;
-    position: absolute;
-    font-size: 70px;
-    text-align: center;
-  }
-  
-  .one {
-    top: 400px;
-  }
-  
-  .two {
-    top: 500px;
-  }
-  
-  .three {
-    top: 600px;
-  } */
-  
   p {
     text-align: center;
   }
@@ -124,15 +90,14 @@
     i++
   }
   
-  const drums = [C1, null, null]
+  const drums = [C1, 1, 1]
   
   function drum () {
     const chorus = new Tone.Chorus(4, 2.5, 0.5).toDestination().start()
     const drum = new Tone.MembraneSynth().connect(chorus)
-    drum.triggerAttackRelease(drums[i % drums.length], '8n')
+    drum.triggerAttackRelease(drums[i % drums.length], '16n')
     i++
   }
-  
   
   function start () {
     Tone.Transport.cancel()
