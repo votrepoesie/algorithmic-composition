@@ -3,20 +3,19 @@
 	<button id="button2">stop</button>
 	<br> 
 	<input type="range" id="bpm" min="60" max="150" step="5" value="0">
-	<br> 
+<!-- 	<br> 
 	<input type="range" id="divisor" min="60" max="150" step="5" value="0">
 	<br>
-	<input type="range" id="" min="60" max="150" step="5" value="0">
-  <div id="music-tunnel"></div>
+	<input type="range" id="" min="60" max="150" step="5" value="0"> -->
 </div>
 
-<div class="music-note one">🎵</div>
+<!-- <div class="music-note one">🎵</div>
 <div class="music-note two">🎵</div>
-<div class="music-note three">🎵</div>
+<div class="music-note three">🎵</div> -->
 
 <style>
   
-  .music-note {
+/*   .music-note {
     background: plum;
     width: 100px;
     height: 90px;
@@ -35,7 +34,7 @@
   
   .three {
     top: 600px;
-  }
+  } */
   
   p {
     text-align: center;
@@ -71,28 +70,13 @@
     width: 220px;
     margin: 10px;
   }
-  
-/*   #music-tunnel {
-    background: black;
-    width: 220px;
-    height: 100px;
-    position: relative;
-    margin: 10px;
-    left: 2px;
-    border-radius: 20px;
-  } */
-  
 </style>
 
 
 <script src="https://tonejs.github.io/build/Tone.js"></script>
 <script>
-  /* global Tone */
-  
-//   using query selector to change position 
-
-  
-  const notes = ['C4', 'E4', 'G4', 'A4', 'F4', 'C4', 'G4', 'E4']
+  /* global Tone */  
+  // const notes = ['C4', 'E4', 'G4', 'A4', 'F4', 'C4', 'G4', 'E4']
   
   //Fibonacci sequence
   //each chord is derived from the sum of the two previous chords
@@ -100,6 +84,8 @@
   
   // const chord1 = ['C4', 'E4', 'G4']
   // const chord2 = ['A3', 'C4', 'E4']
+  
+  
   
   const chord1 = [440, 600, 300]
   const chord2 = [450, 300, 250]
