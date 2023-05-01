@@ -4,13 +4,38 @@
 	<br> 
 	<input type="range" id="bpm" min="60" max="150" step="5" value="0">
 	<br> 
-	<input type="range" id="" min="60" max="150" step="5" value="0">
+	<input type="range" id="divisor" min="60" max="150" step="5" value="0">
 	<br>
 	<input type="range" id="" min="60" max="150" step="5" value="0">
   <div id="music-tunnel"></div>
 </div>
 
+<div class="music-note one">🎵</div>
+<div class="music-note two">🎵</div>
+<div class="music-note three">🎵</div>
+
 <style>
+  
+  .music-note {
+    background: plum;
+    width: 100px;
+    height: 90px;
+    position: absolute;
+    font-size: 70px;
+    text-align: center;
+  }
+  
+  .one {
+    top: 400px;
+  }
+  
+  .two {
+    top: 500px;
+  }
+  
+  .three {
+    top: 600px;
+  }
   
   p {
     text-align: center;
@@ -63,7 +88,11 @@
 <script src="https://tonejs.github.io/build/Tone.js"></script>
 <script>
   /* global Tone */
-  //const notes = ['C4', 'E4', 'G4', 'A4', 'F4', 'C4', 'G4', 'E4']
+  
+//   using query selector to change position 
+
+  
+  const notes = ['C4', 'E4', 'G4', 'A4', 'F4', 'C4', 'G4', 'E4']
   
   //Fibonacci sequence
   //each chord is derived from the sum of the two previous chords
@@ -72,15 +101,15 @@
   // const chord1 = ['C4', 'E4', 'G4']
   // const chord2 = ['A3', 'C4', 'E4']
   
-  const chord1 = [400, 200, 300]
-  const chord2 = [150, 300, 250]
-  const numChords = 10
+  const chord1 = [440, 600, 300]
+  const chord2 = [450, 300, 250]
+  const numChords = 5
   const chords = [chord1, chord2]
   
   for (let i = 2; i < numChords; i++ ) {
     const prev1 = chords[i - 1]
     const prev2 = chords[i - 2]
-    const next = prev1.map((note, index) => (note + prev2[index])/1.9)
+    const next = prev1.map((note, index) => (note + prev2[index])/2)
     chords.push(next)
   }
   
@@ -109,6 +138,15 @@
     //bug: chords[] need to be 000111222333, aka +1 every 3 times & stop at 8
     console.log(i, n)
   }
+  
+  //   function play () {
+  //   // i++ 
+  //   // if (i === 7 || i === 13 || i === 19 || i === 25 || i === 31 || i === 37 || i === 43 || i === 49 || i === 55 || i === 61 || i === 67 || i === 73 || i === 79 || i === 85 || i === 91 || i === 97 || i === 103) n++
+  //   const synth = new Tone.AMSynth().toDestination()
+  //   synth.oscillator.type = 'fatsawtooth'
+  //   synth.triggerAttackRelease(notes[i % notes.length], '8n') 
+  //   //bug: chords[] need to be 000111222333, aka +1 every 3 times & stop at 8
+  // }
   
 //   function switch () {
       
