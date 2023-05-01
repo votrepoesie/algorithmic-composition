@@ -1,4 +1,12 @@
 <div class="container">
+  <p>
+    chord one
+  </p>
+  <input>
+  <p>
+    chord two
+  </p>
+  <input>
   <button id="button1">start</button>
 	<button id="button2">stop</button>
 	<br> 
@@ -78,73 +86,53 @@
   /* global Tone */  
   // const notes = ['C4', 'E4', 'G4', 'A4', 'F4', 'C4', 'G4', 'E4']
   
-  //Fibonacci sequence
-  //each chord is derived from the sum of the two previous chords
-  //still need to write the algorithm
+  function noteToFrequency(note) {
+  	return Tone.Frequency(note).toFrequency();
+	}
   
-  // const chord1 = ['C4', 'E4', 'G4']
-  // const chord2 = ['A3', 'C4', 'E4']
+  const C1 = noteToFrequency('C1')
+	const C4 = noteToFrequency('C4')
+  const E2 = noteToFrequency('E2')
+  const E4 = noteToFrequency('E4')
+  const G4 = noteToFrequency('G4')
+  const A3 = noteToFrequency('A3')
   
+  const chord1 = [C4, E4, G4]
+  const chord2 = [A3, C4, E4]
   
-  
-  const chord1 = [440, 600, 300]
-  const chord2 = [450, 300, 250]
-  const numChords = 5
-  const chords = [chord1, chord2]
-  
-  for (let i = 2; i < numChords; i++ ) {
-    const prev1 = chords[i - 1]
-    const prev2 = chords[i - 2]
-    const next = prev1.map((note, index) => (note + prev2[index])/2)
-    chords.push(next)
+  //calculate next chord
+  function fibo (note1, note2) {
+    //const ran = Math.random() * 0.5 + 1.5
+    return (note1 + note2) / 2
   }
   
-  // const notes = ['C4', 'E4', 'G4', 'A3', 'C4', 'E4', 'F4', 'A4', 'C5',
-  //              'D4', 'F4', 'A4']
+  const chord3 = [fibo(chord1[0], chord2[0]), fibo(chord1[1], chord2[1]), fibo(chord1[2], chord2[2])]
+  const chord4 = [fibo(chord2[0], chord3[0]), fibo(chord2[1], chord3[1]), fibo(chord2[2], chord3[2])]
+  const chord5 = [fibo(chord3[0], chord4[0]), fibo(chord3[1], chord4[1]), fibo(chord3[2], chord4[2])]  
+  const chord6 = [fibo(chord4[0], chord5[0]), fibo(chord4[1], chord5[1]), fibo(chord4[2], chord5[2])]
+  const chords = [...chord1, ...chord2, ...chord3, ...chord4, ...chord5, ...chord6]
+  console.log(chords)
   
-  const drums = ['C1']
-  
-  //mouse position
-  
-	// document.addEventListener("mousemove", (event) => {
-	// console.log(`Mouse position: x=${event.clientX}, y=${event.clientY}`);
-	// });
-  
-  //playing music
-  
-  let n = 0
   let i = 0
   
   function play () {
-    i++ 
-    if (i === 7 || i === 13 || i === 19 || i === 25 || i === 31 || i === 37 || i === 43 || i === 49 || i === 55 || i === 61 || i === 67 || i === 73 || i === 79 || i === 85 || i === 91 || i === 97 || i === 103) n++
-    const synth = new Tone.AMSynth().toDestination()
+    const autoWah = new Tone.AutoWah(50, 6, -30).toDestination()
+    const synth = new Tone.AMSynth().connect(autoWah)
+    autoWah.Q.value = 5
     synth.oscillator.type = 'fatsawtooth'
-    synth.triggerAttackRelease(chords[n][i % chords[1].length], '8n') 
-    //bug: chords[] need to be 000111222333, aka +1 every 3 times & stop at 8
-    console.log(i, n)
+    synth.triggerAttackRelease(chords[i % chords.length], '8n')
+    i++
   }
   
-  //   function play () {
-  //   // i++ 
-  //   // if (i === 7 || i === 13 || i === 19 || i === 25 || i === 31 || i === 37 || i === 43 || i === 49 || i === 55 || i === 61 || i === 67 || i === 73 || i === 79 || i === 85 || i === 91 || i === 97 || i === 103) n++
-  //   const synth = new Tone.AMSynth().toDestination()
-  //   synth.oscillator.type = 'fatsawtooth'
-  //   synth.triggerAttackRelease(notes[i % notes.length], '8n') 
-  //   //bug: chords[] need to be 000111222333, aka +1 every 3 times & stop at 8
-  // }
-  
-//   function switch () {
-      
-//   }
-  
-  console.log(chords)
+  const drums = [C1, null, null]
   
   function drum () {
-    const drum = new Tone.MembraneSynth().toDestination()   
+    const chorus = new Tone.Chorus(4, 2.5, 0.5).toDestination().start()
+    const drum = new Tone.MembraneSynth().connect(chorus)
     drum.triggerAttackRelease(drums[i % drums.length], '8n')
     i++
   }
+  
   
   function start () {
     Tone.Transport.cancel()
