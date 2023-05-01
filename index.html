@@ -58,24 +58,31 @@
   
   const C1 = noteToFrequency('C1')
 	const C4 = noteToFrequency('C4')
+  const C5 = noteToFrequency('C5')
+  const D4 = noteToFrequency('D4')
   const E2 = noteToFrequency('E2')
   const E4 = noteToFrequency('E4')
+  const E5 = noteToFrequency('E5')
   const G4 = noteToFrequency('G4')
   const A3 = noteToFrequency('A3')
+  const A4 = noteToFrequency('A4')
+  const B4 = noteToFrequency('B4')
   
-  const chord1 = [C4, E4, G4]
-  const chord2 = [A3, C4, E4]
+  // const chord1 = [C4, E4, G4]
+  // const chord2 = [A3, C4, E4]
+  const chord1 = [A4, C5, E5]
+  const chord2 = [D4, G4, B4]
   
   //calculate next chord
-  function fibo (note1, note2) {
-    //const ran = Math.random() * 0.5 + 1.5
-    return (note1 + note2) / 2
+  function chaosFibo (note1, note2) {
+    const ran = Math.random() * 0.5 + 1.5
+    return (note1 + note2) / ran
   }
   
-  const chord3 = [fibo(chord1[0], chord2[0]), fibo(chord1[1], chord2[1]), fibo(chord1[2], chord2[2])]
-  const chord4 = [fibo(chord2[0], chord3[0]), fibo(chord2[1], chord3[1]), fibo(chord2[2], chord3[2])]
-  const chord5 = [fibo(chord3[0], chord4[0]), fibo(chord3[1], chord4[1]), fibo(chord3[2], chord4[2])]  
-  const chord6 = [fibo(chord4[0], chord5[0]), fibo(chord4[1], chord5[1]), fibo(chord4[2], chord5[2])]
+  const chord3 = [chaosFibo(chord1[0], chord2[0]), chaosFibo(chord1[1], chord2[1]), chaosFibo(chord1[2], chord2[2])]
+  const chord4 = [chaosFibo(chord2[0], chord3[0]), chaosFibo(chord2[1], chord3[1]), chaosFibo(chord2[2], chord3[2])]
+  const chord5 = [chaosFibo(chord3[0], chord4[0]), chaosFibo(chord3[1], chord4[1]), chaosFibo(chord3[2], chord4[2])]  
+  const chord6 = [chaosFibo(chord4[0], chord5[0]), chaosFibo(chord4[1], chord5[1]), chaosFibo(chord4[2], chord5[2])]
   const chords = [...chord1, ...chord2, ...chord3, ...chord4, ...chord5, ...chord6]
   console.log(chords)
   
@@ -90,7 +97,7 @@
     i++
   }
   
-  const drums = [C1, 1, 1]
+  const drums = [C1]
   
   function drum () {
     const chorus = new Tone.Chorus(4, 2.5, 0.5).toDestination().start()
