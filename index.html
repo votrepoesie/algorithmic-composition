@@ -12,6 +12,8 @@
 <style>
   p {
     text-align: center;
+/*     font-size: 20px; */
+    margin: none;
   }
   
   .container {
@@ -50,8 +52,7 @@
 <script src="https://tonejs.github.io/build/Tone.js"></script>
 <script>
   /* global Tone */  
-  // const notes = ['C4', 'E4', 'G4', 'A4', 'F4', 'C4', 'G4', 'E4']
-  
+
   function noteToFrequency(note) {
   	return Tone.Frequency(note).toFrequency();
 	}
@@ -84,7 +85,6 @@
   const chord5 = [chaosFibo(chord3[0], chord4[0]), chaosFibo(chord3[1], chord4[1]), chaosFibo(chord3[2], chord4[2])]  
   const chord6 = [chaosFibo(chord4[0], chord5[0]), chaosFibo(chord4[1], chord5[1]), chaosFibo(chord4[2], chord5[2])]
   const chords = [...chord1, ...chord2, ...chord3, ...chord4, ...chord5, ...chord6]
-  console.log(chords)
   
   let i = 0
   
@@ -112,12 +112,10 @@
     Tone.Transport.scheduleRepeat(drum, '8n')
     Tone.Transport.bpm.value = 60 //speed 
     Tone.Transport.start()
-    console.log("music!")
   }
   
   function stop () {
     Tone.Transport.stop()
-    console.log("no music!")
   }
 
   const toggle = document.querySelector('#bpm')
