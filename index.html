@@ -58,21 +58,34 @@
 	}
   
   const C1 = noteToFrequency('C1')
+  const C2 = noteToFrequency('C2')
+  const C3 = noteToFrequency('C3')
 	const C4 = noteToFrequency('C4')
   const C5 = noteToFrequency('C5')
+  const D1 = noteToFrequency('D1')
+  const D2 = noteToFrequency('D2')
+  const D3 = noteToFrequency('D3')
   const D4 = noteToFrequency('D4')
+  const D5 = noteToFrequency('D5')
+  const E1 = noteToFrequency('E1')
   const E2 = noteToFrequency('E2')
+  const E3 = noteToFrequency('E3')
   const E4 = noteToFrequency('E4')
   const E5 = noteToFrequency('E5')
+  const F1 = noteToFrequency('F1')
+  const F2 = noteToFrequency('F2')
+  const F3 = noteToFrequency('F3')
+  const F4 = noteToFrequency('F4')
+  const F5 = noteToFrequency('F5')
   const G4 = noteToFrequency('G4')
+  const G5 = noteToFrequency('G5')
+  const G6 = noteToFrequency('G6')
   const A3 = noteToFrequency('A3')
   const A4 = noteToFrequency('A4')
   const B4 = noteToFrequency('B4')
   
-  // const chord1 = [C4, E4, G4]
-  // const chord2 = [A3, C4, E4]
-  const chord1 = [A4, C5, E5]
-  const chord2 = [D4, G4, B4]
+  const chord1 = [C2, E4, G5]
+  const chord2 = [E4, C2, G5]
   
   //calculate next chord
   function chaosFibo (note1, note2) {
@@ -84,8 +97,11 @@
   const chord4 = [chaosFibo(chord2[0], chord3[0]), chaosFibo(chord2[1], chord3[1]), chaosFibo(chord2[2], chord3[2])]
   const chord5 = [chaosFibo(chord3[0], chord4[0]), chaosFibo(chord3[1], chord4[1]), chaosFibo(chord3[2], chord4[2])]  
   const chord6 = [chaosFibo(chord4[0], chord5[0]), chaosFibo(chord4[1], chord5[1]), chaosFibo(chord4[2], chord5[2])]
-  const chords = [...chord1, ...chord2, ...chord3, ...chord4, ...chord5, ...chord6]
-  
+  const chord7 = [chaosFibo(chord5[0], chord6[0]), chaosFibo(chord5[1], chord6[1]), chaosFibo(chord5[2], chord6[2])]
+  const chord8 = [chaosFibo(chord6[0], chord7[0]), chaosFibo(chord6[1], chord7[1]), chaosFibo(chord6[2], chord7[2])]
+  const chords = [...chord1, ...chord2, ...chord3, ...chord4, ...chord5, ...chord6, ...chord7, ...chord8]
+ 
+  console.log(chords)
   let i = 0
   
   function play () {
@@ -93,23 +109,30 @@
     const synth = new Tone.AMSynth().connect(autoWah)
     autoWah.Q.value = 5
     synth.oscillator.type = 'fatsawtooth'
-    synth.triggerAttackRelease(chords[i % chords.length], '8n')
+    synth.triggerAttackRelease(chords[i % chords.length], '10n')
     i++
   }
   
   const drums = [C1]
   
-  function drum () {
+  function drum (t) {
     const chorus = new Tone.Chorus(4, 2.5, 0.5).toDestination().start()
     const drum = new Tone.MembraneSynth().connect(chorus)
-    drum.triggerAttackRelease(drums[i % drums.length], '16n')
+    drum.triggerAttackRelease(drums, '16n', t + 1)
     i++
+  }
+  
+  function metal (t) {
+    const metal = new Tone.MetalSynth().toDestination()
+    metal.triggerAttackRelease(D1, '32n', t + 2)
+    metal.volume.value = -10
   }
   
   function start () {
     Tone.Transport.cancel()
     Tone.Transport.scheduleRepeat(play, '8n')
     Tone.Transport.scheduleRepeat(drum, '8n')
+    Tone.Transport.scheduleRepeat(metal, '4n')
     Tone.Transport.bpm.value = 60 //speed 
     Tone.Transport.start()
   }
