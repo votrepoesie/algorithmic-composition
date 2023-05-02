@@ -1,32 +1,41 @@
 <div class="container">
   <p>chord one</p>
-  <input>
+  <input type="text" id="inputField1">
+  <input type="text" id="inputField2">
+  <input type="text" id="inputField3">
   <p>chord two</p>
-  <input>
+  <input type="text" id="inputField4">
+  <input type="text" id="inputField5">
+  <input type="text" id="inputField6">
+  <button onclick="getValue()">submit</button>
   <button id="button1">start</button>
-	<button id="button2">stop</button>
-	<br> 
-	<input type="range" id="bpm" min="60" max="150" step="5" value="0">
+  <!-- 	<button id="button2">stop</button> -->
+  <br>
+  <input type="range" id="bpm" min="60" max="150" step="5" value="0">
 </div>
 
 <style>
   p {
     text-align: center;
-/*     font-size: 20px; */
+    /*     font-size: 20px; */
     margin: none;
   }
   
+  input {
+    width: 30px;
+  }
+
   .container {
     background: #FFCDCB;
     border: 1px #806867 solid;
     width: 245px;
-    height: 300px;
+    height: 500px;
     position: absolute;
     left: 50px;
     top: 50px;
     border-radius: 30px;
   }
-  
+
   button {
     background: #FFE7CB;
     color: #806867;
@@ -37,11 +46,11 @@
     font-size: 20px;
     margin: 10px;
   }
-  
-	button:hover {
-  	box-shadow: 0px 0px 10px 2px #EAAEAB;
-	}
-  
+
+  button:hover {
+    box-shadow: 0px 0px 10px 2px #EAAEAB;
+  }
+
   input {
     width: 220px;
     margin: 10px;
@@ -51,60 +60,82 @@
 
 <script src="https://tonejs.github.io/build/Tone.js"></script>
 <script>
-  /* global Tone */  
+  /* global Tone */
+
+  //convert notes for fibonacci calculation 
+  //this may be dumb but I know no easier way (for me)
 
   function noteToFrequency(note) {
-  	return Tone.Frequency(note).toFrequency();
-	}
-  
+    return Tone.Frequency(note).toFrequency();
+  }
+
   const C1 = noteToFrequency('C1')
   const C2 = noteToFrequency('C2')
   const C3 = noteToFrequency('C3')
-	const C4 = noteToFrequency('C4')
+  const C4 = noteToFrequency('C4')
   const C5 = noteToFrequency('C5')
   const D1 = noteToFrequency('D1')
   const D2 = noteToFrequency('D2')
   const D3 = noteToFrequency('D3')
   const D4 = noteToFrequency('D4')
   const D5 = noteToFrequency('D5')
+  const D6 = noteToFrequency('D6')
   const E1 = noteToFrequency('E1')
   const E2 = noteToFrequency('E2')
   const E3 = noteToFrequency('E3')
   const E4 = noteToFrequency('E4')
   const E5 = noteToFrequency('E5')
+  const E6 = noteToFrequency('E5')
   const F1 = noteToFrequency('F1')
   const F2 = noteToFrequency('F2')
   const F3 = noteToFrequency('F3')
   const F4 = noteToFrequency('F4')
   const F5 = noteToFrequency('F5')
+  const F6 = noteToFrequency('F6')
+  const G3 = noteToFrequency('G3')
   const G4 = noteToFrequency('G4')
   const G5 = noteToFrequency('G5')
   const G6 = noteToFrequency('G6')
   const A3 = noteToFrequency('A3')
   const A4 = noteToFrequency('A4')
   const B4 = noteToFrequency('B4')
-  
-  const chord1 = [C2, E4, G5]
-  const chord2 = [E4, C2, G5]
-  
+
+  //example chords
+  let chord1 = [C3, E3, D3]
+  let chord2 = [E4, C5, F5]
+
   //calculate next chord
-  function chaosFibo (note1, note2) {
+  function chaosFibo(note1, note2) {
     const ran = Math.random() * 0.5 + 1.5
     return (note1 + note2) / ran
   }
-  
+
   const chord3 = [chaosFibo(chord1[0], chord2[0]), chaosFibo(chord1[1], chord2[1]), chaosFibo(chord1[2], chord2[2])]
   const chord4 = [chaosFibo(chord2[0], chord3[0]), chaosFibo(chord2[1], chord3[1]), chaosFibo(chord2[2], chord3[2])]
-  const chord5 = [chaosFibo(chord3[0], chord4[0]), chaosFibo(chord3[1], chord4[1]), chaosFibo(chord3[2], chord4[2])]  
+  const chord5 = [chaosFibo(chord3[0], chord4[0]), chaosFibo(chord3[1], chord4[1]), chaosFibo(chord3[2], chord4[2])]
   const chord6 = [chaosFibo(chord4[0], chord5[0]), chaosFibo(chord4[1], chord5[1]), chaosFibo(chord4[2], chord5[2])]
   const chord7 = [chaosFibo(chord5[0], chord6[0]), chaosFibo(chord5[1], chord6[1]), chaosFibo(chord5[2], chord6[2])]
   const chord8 = [chaosFibo(chord6[0], chord7[0]), chaosFibo(chord6[1], chord7[1]), chaosFibo(chord6[2], chord7[2])]
   const chords = [...chord1, ...chord2, ...chord3, ...chord4, ...chord5, ...chord6, ...chord7, ...chord8]
- 
+
   console.log(chords)
   let i = 0
   
-  function play () {
+  //get user input
+  function getValue() {
+    const inputField1 = document.getElementById("inputField1")
+    const inputField2 = document.getElementById("inputField2")
+    const value1 = inputField1.value
+    const value2 = inputField2.value
+    chord1 = value1
+    chord2 = value2
+    console.log('submitted')
+	}
+  
+  getValue()
+
+  //synth
+  function play() {
     const autoWah = new Tone.AutoWah(50, 6, -30).toDestination()
     const synth = new Tone.AMSynth().connect(autoWah)
     autoWah.Q.value = 5
@@ -113,43 +144,46 @@
     i++
   }
   
+  //drum
   const drums = [C1]
   
-  function drum (t) {
+  function drum(t) {
     const chorus = new Tone.Chorus(4, 2.5, 0.5).toDestination().start()
     const drum = new Tone.MembraneSynth().connect(chorus)
     drum.triggerAttackRelease(drums, '16n', t + 1)
     i++
   }
   
-  function metal (t) {
+  //metal
+  function metal(t) {
     const metal = new Tone.MetalSynth().toDestination()
     metal.triggerAttackRelease(D1, '32n', t + 2)
     metal.volume.value = -10
   }
-  
-  function start () {
+
+  //play music
+  function start() {
     Tone.Transport.cancel()
     Tone.Transport.scheduleRepeat(play, '8n')
-    Tone.Transport.scheduleRepeat(drum, '8n')
+    Tone.Transport.scheduleRepeat(drum, '16n')
     Tone.Transport.scheduleRepeat(metal, '4n')
     Tone.Transport.bpm.value = 60 //speed 
     Tone.Transport.start()
   }
-  
-  function stop () {
+
+  function stop() {
     Tone.Transport.stop()
   }
 
+  //controller
   const toggle = document.querySelector('#bpm')
-  toggle.addEventListener('input', () => { 
-    Tone.Transport.bpm.value = toggle.value 
+  toggle.addEventListener('input', () => {
+    Tone.Transport.bpm.value = toggle.value
   })
-    
+
   const button1 = document.querySelector('#button1')
   const button2 = document.querySelector('#button2')
-  
+
   button1.addEventListener('click', start)
   button2.addEventListener('click', stop)
-  
 </script>
