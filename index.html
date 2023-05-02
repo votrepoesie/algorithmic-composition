@@ -8,13 +8,13 @@
 
 <div class="container">
   <p><span>chord one</span></p>
-  <input type="text" id="inputField1" class="inputField">
-  <input type="text" id="inputField2" class="inputField">
-  <input type="text" id="inputField3" class="inputField">
+  <input type="text" id="inputField1" class="inputField" value="C3">
+  <input type="text" id="inputField2" class="inputField" value="C4">
+  <input type="text" id="inputField3" class="inputField" value="C5">
   <p><span>chord two</span></p>
-  <input type="text" id="inputField4" class="inputField">
-  <input type="text" id="inputField5" class="inputField">
-  <input type="text" id="inputField6" class="inputField">
+  <input type="text" id="inputField4" class="inputField" value="D3">
+  <input type="text" id="inputField5" class="inputField" value="D4">
+  <input type="text" id="inputField6" class="inputField" value="D5">
   <button onclick="getValue()">submit</button>
   <button id="button1">start</button>
   <!-- 	<button id="button2">stop</button> -->
@@ -26,11 +26,11 @@
 <div class="instruction">
   <p>
     <span>instructions</span><br><br>
+    NOT UPDATED <br><br>
     This music composition requires you to create 2 initial chords, 
     each requiring 3 notes. The subsequent 6 chords are calculated 
     by adding the previous two chords, then divide by a random number
     between 1.5 and 2. <br><br>
-    Voila, chaotic Fabonacci composition!<br><br>
     WARNING: It may not sound good. Sorry I don't have music experience. 
     I tried.
   </p>
@@ -110,6 +110,7 @@
   /* global Tone */
 
   //convert notes for fibonacci calculation 
+  
   function noteToFrequency(note) {
     return Tone.Frequency(note).toFrequency();
   }
@@ -121,8 +122,8 @@
   
   //calculate next chord
   function chaosFibo(chord1, chord2) {
-    const ran = Math.random() * 0.5 + 1.5
-    return (chord1 + chord2) / ran
+    const ran = Math.random() * 1
+    return (chord1 + chord2) * ran + 50
   }
   
   function calculateChords () {
@@ -135,6 +136,9 @@
     chords = [...chord1, ...chord2, ...chord3, ...chord4, ...chord5, ...chord6, ...chord7, ...chord8]
     console.log(chords)
   }
+  
+  //default chords
+  getValue()
   
   //get user input
   function getValue() {
@@ -181,11 +185,12 @@
   
   //play music
   const button = document.querySelector('#button1')
+  Tone.Transport.scheduleRepeat(play, '8n')
+  Tone.Transport.scheduleRepeat(drum, '8n')
+  Tone.Transport.bpm.value = 60 //speed 
+  
   function start() {
-    Tone.Transport.cancel()
-    Tone.Transport.scheduleRepeat(play, '8n')
-    Tone.Transport.scheduleRepeat(drum, '8n')
-    Tone.Transport.bpm.value = 60 //speed 
+    Tone.start()
     if (Tone.Transport.state === 'started') {
       Tone.Transport.stop()
       button.textContent = 'start'
