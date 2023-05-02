@@ -174,7 +174,7 @@
   }
   
   //drum
-  const drums = C1
+  const drums = 'C1'
   
   function drum(t) {
     // const chorus = new Tone.Chorus(4, 2.5, 0.5).toDestination().start()
@@ -186,7 +186,7 @@
   //metal
   function metal(t) {
     const metal = new Tone.MetalSynth().toDestination()
-    metal.triggerAttackRelease(D1, '32n', t + 2)
+    metal.triggerAttackRelease('D1', '32n', t + 2)
     metal.volume.value = -10
   }
 
