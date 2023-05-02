@@ -1,9 +1,17 @@
+<head>
+  <title>algorithmic composition</title>
+  <meta charset="utf-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
+</head>
+
 <div class="container">
-  <p>chord one</p>
+  <p><span>chord one</span></p>
   <input type="text" id="inputField1" class="inputField">
   <input type="text" id="inputField2" class="inputField">
   <input type="text" id="inputField3" class="inputField">
-  <p>chord two</p>
+  <p><span>chord two</span></p>
   <input type="text" id="inputField4" class="inputField">
   <input type="text" id="inputField5" class="inputField">
   <input type="text" id="inputField6" class="inputField">
@@ -11,17 +19,35 @@
   <button id="button1">start</button>
   <!-- 	<button id="button2">stop</button> -->
   <br>
-  <p>
-    change bpm
-  </p>
+  <p><span>change bpm</span></p>
   <input type="range" id="bpm" min="60" max="150" step="5" value="0">
 </div>
 
+<div class="instruction">
+  <p>
+    <span>instructions</span><br><br>
+    This music composition requires you to create 2 initial chords, 
+    each requiring 3 notes. The subsequent 6 chords are calculated 
+    by adding the previous two chords, then divide by a random number
+    between 1.5 and 2. <br><br>
+    Voila, chaotic Fabonacci composition!<br><br>
+    WARNING: It may not sound good. Sorry I don't have music experience. I tried.
+  </p>
+</div>
+
 <style>
+  * {
+    font-family: "Source Code Pro", monospace;
+  }
+  
+  span {
+    text-decoration: underline;
+  }
+  
   p {
     text-align: center;
-    /*     font-size: 20px; */
     margin: none;
+    color: #806867;
   }
   
   #bpm {
@@ -32,7 +58,7 @@
   .container {
     background: #FFCDCB;
     border: 1px #806867 solid;
-    width: 245px;
+    width: 250px;
     height: 370px;
     position: absolute;
     left: 50px;
@@ -60,6 +86,19 @@
     margin: 10px;
     position: relative;
     left: 12px;
+  }
+  
+  .instruction {
+    position: absolute;
+    left: 350px;
+    top: 50px;
+    border: 1px #806867 solid;
+    border-radius: 30px;
+    height: 330px;
+    width: 340px;
+    overflow-wrap: break-word;
+    background: #FFE7CB;
+    padding: 20px;
   }
   
 </style>
