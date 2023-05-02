@@ -183,7 +183,6 @@
   const button = document.querySelector('#button1')
   function start() {
     Tone.Transport.cancel()
-    Tone.Transport.start()
     Tone.Transport.scheduleRepeat(play, '8n')
     Tone.Transport.scheduleRepeat(drum, '8n')
     Tone.Transport.bpm.value = 60 //speed 
