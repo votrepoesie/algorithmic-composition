@@ -110,8 +110,6 @@
   /* global Tone */
 
   //convert notes for fibonacci calculation 
-  //this may be dumb but I know no easier way (for me)
-
   function noteToFrequency(note) {
     return Tone.Frequency(note).toFrequency();
   }
@@ -174,34 +172,28 @@
   }
   
   //drum
-  const drums = 'C1'
-  
-  function drum(t) {
+  function drum() {
     // const chorus = new Tone.Chorus(4, 2.5, 0.5).toDestination().start()
     const drum = new Tone.MembraneSynth().toDestination()
-    drum.triggerAttackRelease(drums, '16n', t+1)
+    drum.triggerAttackRelease('C1', '16n')
     i++
   }
   
-  //metal
-  function metal(t) {
-    const metal = new Tone.MetalSynth().toDestination()
-    metal.triggerAttackRelease('D1', '32n', t + 2)
-    metal.volume.value = -10
-  }
-
   //play music
+  const button = document.querySelector('#button1')
   function start() {
     Tone.Transport.cancel()
+    Tone.Transport.start()
     Tone.Transport.scheduleRepeat(play, '8n')
     Tone.Transport.scheduleRepeat(drum, '8n')
-    Tone.Transport.scheduleRepeat(metal, '4n')
     Tone.Transport.bpm.value = 60 //speed 
-    Tone.Transport.start()
-  }
-
-  function stop() {
-    Tone.Transport.stop()
+    if (Tone.Transport.state === 'started') {
+      Tone.Transport.stop()
+      button.textContent = 'start'
+    } else {
+      Tone.Transport.start()
+      button.textContent = 'stop'
+    }
   }
 
   //controller
@@ -210,9 +202,5 @@
     Tone.Transport.bpm.value = toggle.value
   })
 
-  const button1 = document.querySelector('#button1')
-  const button2 = document.querySelector('#button2')
-
-  button1.addEventListener('click', start)
-  button2.addEventListener('click', stop)
+  button.addEventListener('click', start)
 </script>
