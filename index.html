@@ -8,31 +8,29 @@
 
 <div class="container">
   <p><span>chord one</span></p>
-  <input type="text" id="inputField1" class="inputField" value="C3">
-  <input type="text" id="inputField2" class="inputField" value="C4">
-  <input type="text" id="inputField3" class="inputField" value="C5">
+  <input type="text" id="inputField1" class="inputField" value="D4">
+  <input type="text" id="inputField2" class="inputField" value="F#4">
+  <input type="text" id="inputField3" class="inputField" value="A4">
   <p><span>chord two</span></p>
-  <input type="text" id="inputField4" class="inputField" value="D3">
-  <input type="text" id="inputField5" class="inputField" value="D4">
-  <input type="text" id="inputField6" class="inputField" value="D5">
+  <input type="text" id="inputField4" class="inputField" value="C5">
+  <input type="text" id="inputField5" class="inputField" value="D5">
+  <input type="text" id="inputField6" class="inputField" value="F#5">
   <button onclick="getValue()">submit</button>
   <button id="button1">start</button>
-  <!-- 	<button id="button2">stop</button> -->
   <br>
   <p><span>change bpm</span></p>
-  <input type="range" id="bpm" min="60" max="150" step="5" value="0">
+  <input type="range" id="bpm" min="50" max="140" step="5" value="90">
 </div>
 
 <div class="instruction">
   <p>
     <span>instructions</span><br><br>
-    NOT UPDATED <br><br>
+    *** <br><br>
     This music composition requires you to create 2 initial chords, 
     each requiring 3 notes. The subsequent 6 chords are calculated 
     by adding the previous two chords, then divide by a random number
-    between 1.5 and 2. <br><br>
-    WARNING: It may not sound good. Sorry I don't have music experience. 
-    I tried.
+    between 1.5 and 2.<br><br>
+    WARNING: It may not sound good. Sorry I don't have music experience. I really tried (TuT)
   </p>
 </div>
 
@@ -122,10 +120,10 @@
   
   //calculate next chord
   function chaosFibo(chord1, chord2) {
-    const ran = Math.random() * 1
-    return (chord1 + chord2) * ran + 50
+    const ran = Math.random() * 0.5 + 1.5
+    return (chord1 + chord2) / ran
   }
-  
+
   function calculateChords () {
   	let chord3 = [chaosFibo(chord1[0], chord2[0]), chaosFibo(chord1[1], chord2[1]), chaosFibo(chord1[2], chord2[2])]
   	let chord4 = [chaosFibo(chord2[0], chord3[0]), chaosFibo(chord2[1], chord3[1]), chaosFibo(chord2[2], chord3[2])]
@@ -136,7 +134,7 @@
     chords = [...chord1, ...chord2, ...chord3, ...chord4, ...chord5, ...chord6, ...chord7, ...chord8]
     console.log(chords)
   }
-  
+
   //default chords
   getValue()
   
@@ -160,21 +158,22 @@
     chord2[0] = noteToFrequency(value4)
     chord2[1] = noteToFrequency(value5)
     chord2[2] = noteToFrequency(value6)
-    console.log(chord1, chord2, 'submitted')
+    console.log('user:', chord1, chord2)
     calculateChords()
 	}
   
   //synth
   let i = 0
-  function play() {
+  function play(t) {
     const autoWah = new Tone.AutoWah(50, 6, -30).toDestination()
     const synth = new Tone.AMSynth().connect(autoWah)
     autoWah.Q.value = 5
     synth.oscillator.type = 'fatsawtooth'
-    synth.triggerAttackRelease(chords[i % chords.length], '10n')
+    synth.triggerAttackRelease(chords[i % chords.length], '8n', t)
+    synth.volume.value = -5
     i++
   }
-  
+
   //drum
   function drum() {
     // const chorus = new Tone.Chorus(4, 2.5, 0.5).toDestination().start()
@@ -186,8 +185,8 @@
   //play music
   const button = document.querySelector('#button1')
   Tone.Transport.scheduleRepeat(play, '8n')
-  Tone.Transport.scheduleRepeat(drum, '8n')
-  Tone.Transport.bpm.value = 60 //speed 
+  Tone.Transport.scheduleRepeat(drum, '4n')
+  Tone.Transport.bpm.value = 90 
   
   function start() {
     Tone.start()
